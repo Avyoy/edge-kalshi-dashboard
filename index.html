@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edge — Kalshi Market Intelligence</title>
+<style>
+:root{--bg:#080c12;--panel:#101722;--panel2:#0c131d;--line:#202d3c;--muted:#8392a6;--text:#edf3fb;--green:#42d6a0;--red:#ff6f79;--blue:#78aaff;--amber:#f2c36b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#17263b 0%,#080c12 55%);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
+.shell{max-width:1440px;margin:auto;padding:28px 26px 50px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}.brand{display:flex;gap:12px;align-items:center}.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,#6ea8ff,#3bd5a0);display:grid;place-items:center;color:#07111b;font-weight:900;font-size:20px}.brand b{font-size:18px;letter-spacing:.08em}.brand small{display:block;color:var(--muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase}.status{color:var(--muted);font-size:12px}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:7px}
+.hero{margin-bottom:22px}.eyebrow{color:var(--green);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}.hero h1{font-size:clamp(25px,4vw,38px);line-height:1.12;margin:7px 0 8px;letter-spacing:-.04em}.hero p{margin:0;color:var(--muted);max-width:720px}
+.loadbar{display:flex;gap:10px;padding:10px;background:var(--panel);border:1px solid var(--line);border-radius:14px;margin:22px 0 18px}.loadbar input{flex:1;min-width:0;background:transparent;border:0;color:var(--text);outline:none;padding:8px 10px;font:inherit}.loadbar input::placeholder{color:#65758b}.btn{border:0;border-radius:10px;background:var(--green);color:#06140f;font-weight:800;padding:11px 18px;cursor:pointer}.btn:disabled{opacity:.5;cursor:wait}.subbtn{background:#1b2a3b;color:#dbe8f7;border:1px solid #2a3a4d}.message{min-height:18px;color:var(--muted);font-size:12px;margin:0 3px 16px}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}.card{background:linear-gradient(180deg,rgba(17,25,37,.98),rgba(13,20,30,.98));border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0;box-shadow:0 10px 30px #0002}.span12{grid-column:span 12}.span8{grid-column:span 8}.span7{grid-column:span 7}.span5{grid-column:span 5}.span4{grid-column:span 4}.span3{grid-column:span 3}
+.cardhead{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:15px}.cardhead h3{margin:0;font-size:13px;letter-spacing:.02em}.muted{color:var(--muted)}.tag{font-size:10px;color:#a9bad0;border:1px solid #304052;border-radius:99px;padding:4px 8px;text-transform:uppercase;letter-spacing:.08em}
+.market-title{font-size:20px;font-weight:750;letter-spacing:-.02em;margin:4px 0 10px}.market-meta{display:flex;flex-wrap:wrap;gap:8px;color:var(--muted);font-size:11px}.metric{font-size:30px;font-weight:800;letter-spacing:-.04em}.metric-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}.positive{color:var(--green)}.negative{color:var(--red)}.blue{color:var(--blue)}.amber{color:var(--amber)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.kpi{padding:14px;background:var(--panel2);border:1px solid #1d2a39;border-radius:12px}.kpi .metric{font-size:25px}.kpi .metric-label{font-size:10px}
+.chartwrap{height:245px;position:relative}.chartwrap canvas{width:100%;height:100%;display:block}.chartlegend{display:flex;gap:16px;color:var(--muted);font-size:11px;margin-top:8px}.legendline{display:inline-block;width:14px;height:2px;background:var(--blue);vertical-align:middle;margin-right:5px}
+.sidegrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quote{background:var(--panel2);border:1px solid #1d2a39;border-radius:12px;padding:13px}.quote strong{font-size:24px;display:block;margin-top:3px}.quote.yes strong{color:var(--green)}.quote.no strong{color:var(--red)}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:6px}.field input,.field select{width:100%;background:#09111b;border:1px solid #29394b;color:var(--text);padding:11px 12px;border-radius:9px;font:inherit;outline:none}.field input:focus,.field select:focus{border-color:#6ea8ff}.full{grid-column:1/-1}.seg{display:flex;gap:6px;background:#09111b;padding:5px;border:1px solid #29394b;border-radius:10px}.seg button{flex:1;background:transparent;color:var(--muted);border:0;padding:8px;border-radius:7px;cursor:pointer;font-weight:700}.seg button.active{background:#21354a;color:white}
+.resultgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:14px}.result{padding:12px;border:1px solid #263547;background:#0a121c;border-radius:10px}.result span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}.result b{font-size:19px;display:block;margin-top:3px}
+.bar{height:8px;background:#263445;border-radius:99px;overflow:hidden;margin-top:10px}.bar>i{display:block;height:100%;background:linear-gradient(90deg,#5b9bff,#42d6a0);border-radius:99px}
+.table{width:100%;border-collapse:collapse;font-size:12px}.table th{text-align:left;color:var(--muted);font-weight:600;padding:9px;border-bottom:1px solid var(--line)}.table td{padding:10px 9px;border-bottom:1px solid #1c2937}.table tr:last-child td{border:0}
+.disclaimer{color:#7f8da0;font-size:11px;line-height:1.5;margin-top:13px}.empty{padding:38px 18px;text-align:center;color:var(--muted)}.empty .symbol{font-size:32px;margin-bottom:8px}.hidden{display:none!important}
+footer{color:#627187;font-size:11px;margin-top:20px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:900px){.span8,.span7,.span5,.span4,.span3{grid-column:span 12}.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.shell{padding:18px 13px 35px}.loadbar{flex-direction:column}.loadbar .btn{width:100%}.kpis{grid-template-columns:1fr 1fr}.kpi .metric{font-size:21px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.metric{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="top"><div class="brand"><div class="logo">E</div><div><b>EDGE</b><small>Kalshi market intelligence</small></div></div><div class="status"><span class="dot"></span><span id="connection">Awaiting market</span></div></header>
+<section class="hero"><div class="eyebrow">Market analysis terminal</div><h1>Find the edge.<br>Price the risk.</h1><p>Load a Kalshi market to inspect live quotes and recent trades, then model your own position with transparent payout and probability projections.</p></section>
+<div class="loadbar"><input id="url" type="url" placeholder="Paste a Kalshi market URL — e.g. https://kalshi.com/markets/..." autocomplete="url"><button class="btn" id="load">Analyze market ↗</button></div>
+<div class="message" id="message">Paste a direct market link to get started. Public market data is loaded from Kalshi; no account connection required.</div>
+<section id="dashboard" class="hidden">
+<div class="card span12" style="margin-bottom:14px"><div class="cardhead"><span class="tag" id="market-status">MARKET</span><span class="muted" id="ticker"></span></div><div class="market-title" id="title">—</div><div class="market-meta"><span id="category">Kalshi</span><span>•</span><span id="close">Close —</span><span>•</span><span id="updated">Updated —</span></div></div>
+<div class="kpis" style="margin-bottom:14px">
+<div class="kpi"><div class="metric-label">Market implied YES</div><div class="metric blue" id="implied">—</div></div>
+<div class="kpi"><div class="metric-label">Last trade</div><div class="metric" id="last">—</div></div>
+<div class="kpi"><div class="metric-label">24h volume</div><div class="metric" id="volume">—</div></div>
+<div class="kpi"><div class="metric-label">Open interest</div><div class="metric" id="oi">—</div></div>
+</div>
+<div class="grid">
+<div class="card span8"><div class="cardhead"><h3>RECENT PRICE ACTION</h3><span class="tag" id="chart-range">TRADE HISTORY</span></div><div class="chartwrap"><canvas id="chart"></canvas></div><div class="chartlegend"><span><i class="legendline"></i>YES trade price</span><span id="chart-note">Recent public trades</span></div></div>
+<div class="card span4"><div class="cardhead"><h3>LIVE QUOTE SNAPSHOT</h3><span class="tag">YES / NO</span></div><div class="sidegrid"><div class="quote yes"><span class="muted">YES bid</span><strong id="yesbid">—</strong><span class="muted" id="yesask">Ask —</span></div><div class="quote no"><span class="muted">NO bid</span><strong id="nobid">—</strong><span class="muted" id="noask">Ask —</span></div></div><div class="disclaimer">Quotes are exchange-reported prices. Bid/ask spread and liquidity matter; the last trade is not necessarily the price you can execute at.</div></div>
+<div class="card span7"><div class="cardhead"><h3>YOUR POSITION SIMULATOR</h3><span class="tag">WHAT-IF MODEL</span></div>
+<div class="formgrid">
+<div class="field full"><label>POSITION SIDE</label><div class="seg"><button id="yesSide" class="active" type="button">YES</button><button id="noSide" type="button">NO</button></div></div>
+<div class="field"><label>Contracts</label><input id="contracts" type="number" min="1" step="1" value="10"></div>
+<div class="field"><label>Entry price per contract (¢)</label><input id="entry" type="number" min="1" max="99" step="1" value="50"></div>
+<div class="field"><label>Optional total budget ($)</label><input id="budget" type="number" min="0" step=".01" placeholder="Leave blank to use contracts"></div>
+<div class="field"><label>Projected YES probability (%)</label><input id="projection" type="number" min="1" max="99" step="1" value="50"></div>
+</div>
+<div class="resultgrid">
+<div class="result"><span>Estimated position cost</span><b id="cost">$5.00</b></div><div class="result"><span>Max payout if right</span><b id="payout">$10.00</b></div>
+<div class="result"><span>Profit if right</span><b class="positive" id="profit">+$5.00</b></div><div class="result"><span>Loss if wrong</span><b class="negative" id="loss">−$5.00</b></div>
+<div class="result"><span>Break-even probability</span><b id="breakeven">50.0%</b></div><div class="result"><span>Expected value / contract</span><b id="ev">$0.00</b></div>
+</div><div class="disclaimer">Projection is your editable assumption, not an AI certainty. Cost and payout exclude exchange fees, slippage, and taxes. Budget mode estimates whole contracts at your entry price.</div>
+</div>
+<div class="card span5"><div class="cardhead"><h3>EDGE CHECK</h3><span class="tag">MODEL VS MARKET</span></div><div class="metric" id="edge">0.0 pp</div><div class="muted" style="font-size:12px;margin-top:3px" id="edge-caption">Your projected YES probability minus market midpoint.</div><div class="bar"><i id="edgebar" style="width:50%"></i></div><div style="display:flex;justify-content:space-between;margin-top:13px;font-size:11px;color:var(--muted)"><span>Market implied</span><b id="marketline">—</b></div><div style="display:flex;justify-content:space-between;margin-top:7px;font-size:11px;color:var(--muted)"><span>Your projection</span><b id="yourline">—</b></div><div class="disclaimer" id="edge-note">A positive edge means your estimate is above the market's YES midpoint. It does not mean the market is mispriced.</div></div>
+<div class="card span12"><div class="cardhead"><h3>SCENARIO PROJECTIONS</h3><span class="tag">SETTLEMENT OUTCOMES</span></div><table class="table"><thead><tr><th>Outcome</th><th>Scenario probability</th><th>Position value</th><th>Net P/L</th></tr></thead><tbody><tr><td id="scenario-win">YES settles YES</td><td id="scenario-win-p">—</td><td id="scenario-win-v">—</td><td id="scenario-win-pl" class="positive">—</td></tr><tr><td id="scenario-lose">YES settles NO</td><td id="scenario-lose-p">—</td><td id="scenario-lose-v">—</td><td id="scenario-lose-pl" class="negative">—</td></tr><tr><td><b>Probability-weighted expected P/L</b></td><td>100%</td><td>—</td><td id="scenario-ev"><b>—</b></td></tr></tbody></table><div class="disclaimer">Expected value is a mathematical scenario using the probability you entered. It is not a forecast generated from hidden information, and it can be wrong.</div></div>
+</div>
+</section>
+<section id="empty" class="card empty"><div class="symbol">⌁</div><b>Your market workspace is ready</b><p>Paste a Kalshi market URL above. EDGE will extract the market ticker and load public market data.</p></section>
+<footer><span>EDGE • Independent market analysis</span><span>Informational only · No trades placed · Not financial advice</span></footer>
+</div>
+<script>
+const API='https://external-api.kalshi.com/trade-api/v2';
+// Kalshi's public API does not provide browser CORS access in all environments.
+// A CORS relay lets this standalone file request public market data without API keys.
+const RELAY='https://corsproxy.io/?url=';
+let market=null, trades=[], side='yes';
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n);
+const pct=n=>(Number.isFinite(n)?n:0).toFixed(1)+'%';
+function val(obj,keys){for(const k of keys){if(obj?.[k]!==undefined&&obj[k]!==null)return obj[k]}return null}
+function dollars(obj, namesCents, namesDollars){let v=val(obj,namesDollars);if(v!==null)return Number(v)*100;v=val(obj,namesCents);return v===null?null:Number(v)}
+function fmtC(v){return v===null||!Number.isFinite(v)?'—':v.toFixed(0)+'¢'}
+function fmtNum(v){let n=Number(v);return Number.isFinite(n)?Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:1}).format(n):'—'}
+function tickerFromUrl(input){
+ let raw=input.trim(); if(!raw)throw Error('Paste a Kalshi market URL first.');
+ let u;try{u=new URL(raw)}catch{throw Error('That does not look like a valid URL. Paste the full Kalshi market link.')}
+ if(!/(^|\.)kalshi\.com$/i.test(u.hostname))throw Error('Use a URL from kalshi.com.');
+ let parts=decodeURIComponent(u.pathname).split('/').filter(Boolean);
+ // Kalshi market URLs often contain a human-readable slug before the actual ticker.
+ // Prefer a whole path segment matching the ticker; otherwise a slug like
+ // "btc-15-min--7683293-target" can be mistaken for "BTC-15".
+ const tickerPattern=/^[A-Z][A-Z0-9]{2,}(?:-[A-Z0-9]+)+$/i;
+ for(const part of parts.slice().reverse()){
+   if(tickerPattern.test(part)) return part.toUpperCase();
+ }
+ // Fallback for URL variants that append extra text to the ticker segment.
+ for(const part of parts.slice().reverse()){
+   const match=part.toUpperCase().match(/[A-Z][A-Z0-9]{2,}(?:-[A-Z0-9]+){1,}/g);
+   if(match){
+     const plausible=match.find(x=>x.includes('-') && !/^(BTC|ETH|SOL)-\d+$/i.test(x));
+     if(plausible)return plausible;
+   }
+ }
+ throw Error('Could not find a market ticker in that URL. Make sure it is a direct market link, not a category or event overview.');
+}
+async function getJson(path){
+ const target=API+path;
+ let directError=null;
+ try{
+   const r=await fetch(target,{headers:{'Accept':'application/json'},mode:'cors'});
+   if(!r.ok)throw Error('Kalshi API returned HTTP '+r.status);
+   return await r.json();
+ }catch(e){directError=e}
+ try{
+   const r=await fetch(RELAY+encodeURIComponent(target),{headers:{'Accept':'application/json'}});
+   if(!r.ok)throw Error('Market-data relay returned HTTP '+r.status);
+   const data=await r.json();
+   if(data && data.contents && typeof data.contents==='string') return JSON.parse(data.contents);
+   return data;
+ }catch(e){
+   throw Error('Could not load Kalshi market data. Direct request: '+(directError?.message||'blocked')+'. Relay request: '+(e?.message||'failed')+'. Try opening this dashboard in Chrome/Safari with internet access, or use the hosted version with a server-side API connection.');
+ }
+}
+function midpoint(m){
+ let bid=dollars(m,['yes_bid'],['yes_bid_dollars']), ask=dollars(m,['yes_ask'],['yes_ask_dollars']);
+ if(bid!==null&&ask!==null&&bid>0&&ask>0)return (bid+ask)/2;
+ let last=dollars(m,['last_price'],['last_price_dollars']);return last??(bid??ask??50);
+}
+async function loadMarket(){
+ $('load').disabled=true;$('message').textContent='Reading URL…';
+ $('dashboard').classList.add('hidden');$('empty').classList.remove('hidden');
+ try{
+  const ticker=tickerFromUrl($('url').value);
+  const data=await getJson('/markets/'+encodeURIComponent(ticker));
+  market=data.market||data;
+  if(!market.ticker)throw Error('Market data was returned without a ticker. Check that the link points to a single market.');
+  trades=[];
+  try{const t=await getJson('/markets/trades?ticker='+encodeURIComponent(market.ticker)+'&limit=100');trades=t.trades||[]}catch(e){$('chart-note').textContent='Trade history unavailable; showing quote reference.'}
+  renderMarket();$('dashboard').classList.remove('hidden');$('empty').classList.add('hidden');
+  $('message').textContent='Loaded '+market.ticker+'. Public quotes and trade history retrieved successfully.';
+  $('connection').textContent='Market data loaded';$('connection').style.color='var(--green)';
+  $('projection').value=Math.round(midpoint(market));
+  drawChart();calculate();
+ }catch(e){$('message').textContent=e.message;$('connection').textContent='Load failed';$('connection').style.color='var(--red)'}
+ finally{$('load').disabled=false}
+}
+function renderMarket(){
+ const m=market, yesBid=dollars(m,['yes_bid'],['yes_bid_dollars']),yesAsk=dollars(m,['yes_ask'],['yes_ask_dollars']),noBid=dollars(m,['no_bid'],['no_bid_dollars']),noAsk=dollars(m,['no_ask'],['no_ask_dollars']),last=dollars(m,['last_price'],['last_price_dollars']);
+ $('title').textContent=val(m,['title','subtitle'])||m.ticker;
+ $('ticker').textContent=m.ticker;$('market-status').textContent=(m.status||'UNKNOWN').toUpperCase();
+ $('close').textContent='Close '+(m.close_time?new Date(m.close_time).toLocaleString():'—');
+ $('updated').textContent='Loaded '+new Date().toLocaleTimeString();
+ $('implied').textContent=pct(midpoint(m));$('last').textContent=fmtC(last);
+ $('volume').textContent=fmtNum(val(m,['volume_fp','volume'])??0);$('oi').textContent=fmtNum(val(m,['open_interest_fp','open_interest'])??0);
+ $('yesbid').textContent=fmtC(yesBid);$('yesask').textContent='Ask '+fmtC(yesAsk);
+ $('nobid').textContent=fmtC(noBid);$('noask').textContent='Ask '+fmtC(noAsk);
+}
+function drawChart(){
+ const c=$('chart'),ctx=c.getContext('2d'),rect=c.getBoundingClientRect(),dpr=window.devicePixelRatio||1;
+ c.width=rect.width*dpr;c.height=rect.height*dpr;ctx.scale(dpr,dpr);
+ const w=rect.width,h=rect.height,p={l:36,r:12,t:12,b:25};
+ let points=trades.map(t=>({x:new Date(t.created_time||t.ts).getTime(),y:dollars(t,['yes_price'],['yes_price_dollars'])})).filter(p=>Number.isFinite(p.x)&&Number.isFinite(p.y));
+ points.sort((a,b)=>a.x-b.x);
+ if(points.length<2){let price=midpoint(market);points=[{x:0,y:price},{x:1,y:price}]}
+ let min=Math.min(...points.map(p=>p.y)),max=Math.max(...points.map(p=>p.y));if(max-min<2){min=Math.max(0,min-2);max=Math.min(100,max+2)}
+ const X=x=>p.l+(x-points[0].x)/(points[points.length-1].x-points[0].x||1)*(w-p.l-p.r);
+ const Y=y=>h-p.b-(y-min)/(max-min)*(h-p.t-p.b);
+ ctx.font='10px system-ui';ctx.fillStyle='#8292a7';ctx.strokeStyle='#263446';ctx.lineWidth=1;
+ for(let i=0;i<=4;i++){let y=p.t+i*(h-p.t-p.b)/4;ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(w-p.r,y);ctx.stroke();ctx.fillText(Math.round(max-(max-min)*i/4)+'¢',2,y+3)}
+ ctx.beginPath();points.forEach((v,i)=>i?ctx.lineTo(X(v.x),Y(v.y)):ctx.moveTo(X(v.x),Y(v.y)));
+ ctx.lineTo(X(points[points.length-1].x),h-p.b);ctx.lineTo(X(points[0].x),h-p.b);ctx.closePath();ctx.fillStyle='rgba(120,170,255,.10)';ctx.fill();
+ ctx.beginPath();points.forEach((v,i)=>i?ctx.lineTo(X(v.x),Y(v.y)):ctx.moveTo(X(v.x),Y(v.y)));ctx.strokeStyle='#78aaff';ctx.lineWidth=2;ctx.stroke();
+ ctx.fillStyle='#8392a6';ctx.fillText(points.length===2&&trades.length<2?'No recent trade series':'Oldest',p.l,h-5);ctx.textAlign='right';ctx.fillText('Latest',w-p.r,h-5);ctx.textAlign='left';
+}
+function setSide(s){side=s;$('yesSide').classList.toggle('active',s==='yes');$('noSide').classList.toggle('active',s==='no');calculate()}
+function calculate(){
+ const n=Math.max(1,Math.floor(Number($('contracts').value)||1)),entry=Math.min(99,Math.max(1,Number($('entry').value)||1)),budget=Number($('budget').value),useBudget=$('budget').value.trim()!==''&&Number.isFinite(budget)&&budget>0;
+ const count=useBudget?Math.max(0,Math.floor(budget/(entry/100))):n;
+ const cost=count*entry/100,payout=count,profit=payout-cost,loss=cost;
+ const proj=Math.min(99,Math.max(1,Number($('projection').value)||50))/100;
+ const yesP=side==='yes'?proj:proj; // User projection always represents YES probability.
+ const winP=side==='yes'?yesP:1-yesP;
+ const marketP=market?midpoint(market)/100:.5;
+ const breakeven=cost>0?cost/payout*100:0;
+ const ev=payout*winP-cost;
+ $('cost').textContent=money(cost);$('payout').textContent=money(payout);$('profit').textContent='+'+money(profit);$('loss').textContent='−'+money(loss);
+ $('breakeven').textContent=pct(breakeven);$('ev').textContent=(ev>=0?'+':'')+money(ev);
+ const edge=(yesP-marketP)*100*(side==='yes'?1:-1);
+ $('edge').textContent=(edge>=0?'+':'')+edge.toFixed(1)+' pp';$('edge').className='metric '+(edge>=0?'positive':'negative');
+ $('edge-caption').textContent=(side==='yes'?'YES':'NO')+' position: model probability advantage vs market midpoint.';
+ $('edgebar').style.width=Math.max(0,Math.min(100,50+edge*2))+'%';
+ $('marketline').textContent=pct(marketP*100);$('yourline').textContent=pct((side==='yes'?yesP:1-yesP)*100);
+ $('scenario-win').textContent=side.toUpperCase()+' settles in your favor';$('scenario-lose').textContent=side.toUpperCase()+' settles against you';
+ $('scenario-win-p').textContent=pct(winP*100);$('scenario-lose-p').textContent=pct((1-winP)*100);
+ $('scenario-win-v').textContent=money(payout);$('scenario-lose-v').textContent=money(0);
+ $('scenario-win-pl').textContent='+'+money(profit);$('scenario-lose-pl').textContent='−'+money(loss);
+ $('scenario-ev').textContent=(ev>=0?'+':'')+money(ev);$('scenario-ev').className=ev>=0?'positive':'negative';
+}
+$('load').addEventListener('click',loadMarket);$('url').addEventListener('keydown',e=>{if(e.key==='Enter')loadMarket()});
+$('yesSide').addEventListener('click',()=>setSide('yes'));$('noSide').addEventListener('click',()=>setSide('no'));
+['contracts','entry','budget','projection'].forEach(id=>$(id).addEventListener('input',calculate));
+window.addEventListener('resize',()=>{if(market)drawChart()});
+</script>
+</body></html>
